@@ -7,69 +7,224 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            min-height: 100vh;
-            display: flex; justify-content: center; align-items: center;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #0c0a1d, #1a1530, #0f1a2e);
+            color: #e0e0e0; min-height: 100vh; line-height: 1.8;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 50px 20px 40px; gap: 30px;
+        }
+        .header-left { display: flex; align-items: center; gap: 20px; }
+        .avatar {
+            width: 100px; height: 100px; border-radius: 50%;
+            object-fit: cover; flex-shrink: 0;
+            box-shadow: 0 8px 32px rgba(102,126,234,0.3);
+            border: 3px solid rgba(167,139,250,0.3);
+        }
+        .header-info h1 { font-size: 28px; color: #fff; margin-bottom: 4px; }
+        .header-info .school { font-size: 14px; color: rgba(255,255,255,0.55); }
+        .header-info .tagline { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+        .header-contact {
+            text-align: right; flex-shrink: 0;
+        }
+        .header-contact p { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+        .header-contact p span { color: #a78bfa; margin-right: 4px; }
+        .header-contact a:hover { color: #a78bfa !important; }
+        @media (max-width:600px) {
+            .header { flex-direction: column; text-align: center; }
+            .header-left { flex-direction: column; }
+            .header-contact { text-align: center; }
+        }
+        .section { margin-bottom: 28px; }
+        .section-title {
+            font-size: 18px; font-weight: bold; color: #a78bfa;
+            margin-bottom: 14px; padding-bottom: 8px;
+            border-bottom: 2px solid rgba(167,139,250,0.2);
+            display: flex; align-items: center; gap: 8px;
         }
         .card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 24px;
-            padding: 50px 40px;
-            text-align: center;
-            max-width: 480px;
-            width: 90%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px; padding: 24px 28px;
         }
-        .avatar {
-            width: 100px; height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            margin: 0 auto 24px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 44px;
-            color: #fff;
+        .award-group { margin-bottom: 18px; }
+        .award-group:last-child { margin-bottom: 0; }
+        .award-label {
+            font-size: 13px; color: #a78bfa; font-weight: bold;
+            margin-bottom: 8px; letter-spacing: 1px;
         }
-        h1 { color: #fff; font-size: 28px; margin-bottom: 8px; }
-        .bio { color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 32px; }
-        .links { display: flex; flex-direction: column; gap: 12px; }
-        .links a {
-            display: block; padding: 14px 20px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            color: #fff; text-decoration: none; font-size: 16px;
-            transition: all 0.3s;
+        .award-item {
+            padding: 6px 0 6px 16px; border-left: 2px solid rgba(255,255,255,0.1);
+            margin-bottom: 4px; font-size: 14px; color: #ccc;
         }
-        .links a:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-2px);
+        .award-item:hover { border-left-color: #a78bfa; }
+        .award-item .year { color: #a78bfa; font-weight: bold; margin-right: 6px; }
+        .more { color: rgba(255,255,255,0.35); font-size: 13px; padding-left: 16px; margin-top: 4px; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+        .skill-tag {
+            padding: 6px 16px; border-radius: 20px; font-size: 13px;
+            background: rgba(167,139,250,0.12); color: #c4b5fd;
+            border: 1px solid rgba(167,139,250,0.2);
         }
-        .links a .arrow { float: right; opacity: 0.5; }
-        .footer { color: rgba(255,255,255,0.3); font-size: 12px; margin-top: 32px; }
+        .project-item {
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .project-item:last-child { border-bottom: none; }
+        .project-item a { color: #c4b5fd; text-decoration: none; font-size: 15px; font-weight: bold; }
+        .project-item a:hover { color: #e0d4ff; }
+        .project-item .desc { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+        .info-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+        .info-item {
+            padding: 8px 14px; border-radius: 8px; font-size: 14px; color: #ccc;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+        }
+        .info-label {
+            display: inline-block; width: 42px; color: #a78bfa;
+            font-weight: bold; font-size: 13px; margin-right: 8px;
+        }
+        .footer { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.25); font-size: 13px; }
+        .footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+        .footer a:hover { color: #a78bfa; }
+        @media (max-width:600px) { .container { padding:20px 14px; } .card { padding:18px 16px; } }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="avatar">🐼</div>
-        <h1>ZhouXiaoTao</h1>
-        <p class="bio">热爱编程 | 持续学习 | 欢迎交流</p>
-        <div class="links">
-            <a href="https://github.com/ZhouTaowanteatting" target="_blank">
-                💻 GitHub <span class="arrow">→</span>
-            </a>
-            <a href="https://github.com/ZhouTaowanteatting/news-management-system" target="_blank">
-                📰 新闻管理系统 <span class="arrow">→</span>
-            </a>
-            <a href="https://github.com/ZhouTaowanteatting/movie-analysis" target="_blank">
-                🎬 电影分析系统 <span class="arrow">→</span>
-            </a>
-            <a href="https://github.com/ZhouTaowanteatting/CapsWriter-Offline-fine-tune" target="_blank">
-                🎤 CapsWriter 语音输入 <span class="arrow">→</span>
-            </a>
+    <div class="container">
+
+        <div class="header">
+            <div class="header-left">
+                <img class="avatar" src="avatar.jpg" alt="周涛">
+                <div class="header-info">
+                    <h1>周涛</h1>
+                    <p class="school">江西科技师范大学 · 人工智能专业</p>
+                    <p class="tagline">专业排名前 5%</p>
+                </div>
+            </div>
+            <div class="header-contact">
+                <p><span>📍</span> 南昌</p>
+                <p><span>📧</span> <a href="mailto:zxt030609@gmail.com" style="color:rgba(255,255,255,0.5);text-decoration:none;">zxt030609@gmail.com</a></p>
+                <p><span>💬</span> qlzt0625</p>
+                <p><span>💻</span> <a href="https://github.com/ZhouTaowanteatting" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;">ZhouTaowanteatting</a></p>
+            </div>
         </div>
-        <p class="footer">Made with ❤️ by ZhouXiaoTao</p>
+
+        <div class="section">
+            <div class="section-title">📋 基本信息</div>
+            <div class="card">
+                <div class="info-group">
+                    <div class="info-item"><span class="info-label">学校</span>江西科技师范大学</div>
+                    <div class="info-item"><span class="info-label">专业</span>人工智能</div>
+                    <div class="info-item"><span class="info-label">排名</span>专业前 5%</div>
+                    <div class="info-item"><span class="info-label">现居</span>南昌</div>
+                    <div class="info-item"><span class="info-label">邮箱</span><a href="mailto:zxt030609@gmail.com" style="color:#c4b5fd;text-decoration:none;">zxt030609@gmail.com</a></div>
+                    <div class="info-item"><span class="info-label">微信</span>qlzt0625</div>
+                    <div class="info-item"><span class="info-label">GitHub</span><a href="https://github.com/ZhouTaowanteatting" target="_blank" style="color:#c4b5fd;text-decoration:none;">ZhouTaowanteatting</a></div>
+                </div>
+            </div>
+            <div style="margin-top:14px;" class="card">
+                <p style="color:#ccc;font-size:14px;line-height:1.9;">
+                    主攻<b style="color:#c4b5fd;">人工智能</b>方向，能够基于 PyTorch / TensorFlow 独立完成
+                    数据处理、模型选型、训练调优到服务部署的完整链路。同时具备
+                    <b style="color:#c4b5fd;">软件开发</b>能力，可借助 Spring Boot、Vue.js 等框架
+                    将 AI 能力落地为可用的产品。习惯用 PyCharm / VS Code 写代码，
+                    MATLAB 做数据分析，Git + Docker 管理项目与部署环境。
+                </p>
+            </div>
+            <div style="margin-top:14px;" class="card">
+                <div class="award-group">
+                    <div class="award-label">💪 技术栈</div>
+                    <div class="award-item"><b>语言</b>：Python、Java、C/C++</div>
+                    <div class="award-item"><b>AI / 数据</b>：PyTorch、TensorFlow、机器学习、深度学习、NLP、计算机视觉、统计建模</div>
+                    <div class="award-item"><b>开发工具</b>：PyCharm、VS Code、MATLAB、Git、Docker、Linux</div>
+                    <div class="award-item"><b>后端</b>：Spring Boot、Flask、MyBatis Plus、JWT</div>
+                    <div class="award-item"><b>前端</b>：Vue.js、HTML / CSS / JavaScript、ECharts</div>
+                    <div class="award-item"><b>数据库</b>：MySQL、Redis</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🏆 竞赛获奖</div>
+            <div class="card">
+                <div class="award-group">
+                    <div class="award-label">国家级奖项（共 5 项）</div>
+                    <div class="award-item">
+                        <span class="year">2025</span> 睿抗机器人开发者大赛（RAICOM）全国总决赛 · <b>三等奖</b>
+                    </div>
+                    <div class="award-item">
+                        <span class="year">2025</span> 全国大学生仿真建模应用挑战赛 · <b>三等奖</b>
+                    </div>
+                    <div class="award-item">
+                        <span class="year">2025</span> 全国高校计算机挑战赛华东赛区本研组 · <b>二等奖</b>
+                    </div>
+                    <div class="more">等共 5 项国家级奖项</div>
+                </div>
+                <div class="award-group">
+                    <div class="award-label">省级奖项（共 13 项）</div>
+                    <div class="award-item">
+                        <span class="year">2026</span> 全国大学生统计建模大赛江西赛区 · <b>一等奖</b>
+                    </div>
+                    <div class="award-item">
+                        <span class="year">2025</span> 睿抗机器人开发者大赛（RAICOM）江西省 · <b>一等奖</b>
+                    </div>
+                    <div class="award-item">
+                        <span class="year">2026</span> 中国计算机设计大赛-人工智能实践赛江西省 · <b>三等奖</b>
+                    </div>
+                    <div class="more">等共 13 项省级奖项</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">💡 技术栈</div>
+            <div class="card">
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">C/C++</span>
+                    <span class="skill-tag">PyTorch</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">机器学习</span>
+                    <span class="skill-tag">深度学习</span>
+                    <span class="skill-tag">NLP</span>
+                    <span class="skill-tag">计算机视觉</span>
+                    <span class="skill-tag">Spring Boot</span>
+                    <span class="skill-tag">Vue.js</span>
+                    <span class="skill-tag">Flask</span>
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Linux</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">鸿蒙开发</span>
+                    <span class="skill-tag">数据建模</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🚀 开源项目</div>
+            <div class="card">
+                <div class="project-item">
+                    <a href="https://github.com/ZhouTaowanteatting/news-management-system" target="_blank">📰 新闻管理系统</a>
+                    <div class="desc">Spring Boot + MyBatis Plus + JWT + MinIO 全栈新闻资讯平台</div>
+                </div>
+                <div class="project-item">
+                    <a href="https://github.com/ZhouTaowanteatting/movie-analysis" target="_blank">🎬 MovieScope 电影分析系统</a>
+                    <div class="desc">Flask + ECharts 数据可视化分析平台</div>
+                </div>
+                <div class="project-item">
+                    <a href="https://github.com/ZhouTaowanteatting/CapsWriter-Offline-fine-tune" target="_blank">🎤 CapsWriter 离线语音输入（微调版）</a>
+                    <div class="desc">基于深度学习的完全离线语音识别，模型 Fine-tune 优化</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ by ZhouXiaoTao</p>
+        </div>
+
     </div>
 </body>
 </html>
